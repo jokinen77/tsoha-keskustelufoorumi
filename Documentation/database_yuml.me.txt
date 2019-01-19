@@ -1,0 +1,12 @@
+[User|(PK) username String; (FK) userTypeId Integer; email String; password String]
+[UserType|(PK) id Integer; name String; value Douple]
+[UserGroup|(PK) name String; description String]
+[UserGroupUser|(FK) userId String; (FK) userGroupId String]
+[Forum|(PK) id Integer; (FK) userGroupId String; name String; created Date]
+[Message|(PK) id Integer; (FK) forumId Integer; (FK) userId String; content String; sended Date]
+
+[User]*-1[UserType]
+[User]1-*[UserGroupUser]
+[UserGroup]1-*[UserGroupUser]
+[UserGroup]1-*[Forum]
+[Forum]1-*[Message]
