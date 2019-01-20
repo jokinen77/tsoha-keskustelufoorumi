@@ -1,0 +1,54 @@
+.simple_button {
+  white-space:nowrap;
+  border-radius: 4px;
+  background: rgb(240, 240, 240);
+  color: black;
+  padding: 3px 6px;
+  text-align: center;
+  text-decoration: none;
+  display: inline;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.flex-container {
+  padding: 0px;
+  margin: 0px;
+  list-style: none;
+  /* previous syntax */
+  display: -webkit-box;
+  display: -moz-box;
+  display: box;
+  /* current syntax */
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.flex-container li {
+  padding: 3px;
+  border: none;
+}
+
+.hbox {
+  /* previous syntax */
+  -moz-box-orient: horizontal;
+  -webkit-box-orient: horizontal;
+  box-orient: horizontal;
+  /* current syntax */
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+}
+
+.vbox {
+  /* previous syntax */
+  -moz-box-orient: vertical;
+  -webkit-box-orient: vertical;
+  box-orient: vertical;
+  /* current syntax */
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+}

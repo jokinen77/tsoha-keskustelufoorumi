@@ -1,0 +1,19 @@
+{% extends "layout.html" %}
+
+{% block body %}
+  <table>
+    <tr>
+      <th>Id</th>
+      <th>Name</th>
+      <th>Value</th>
+    </tr>
+    {% for usertype in usertypes %}
+    <tr>
+      <td>{{ usertype.id }}</td>
+      <td>{{ usertype.name }}</td>
+      <td>{{ usertype.value }}</td>
+    </tr>
+    {% endfor %}
+  </table>
+  <button class="simple_button" onclick="window.location='{{ url_for('usertype_form')}}'">Create a new usertype</button>
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+
+{% block body %}
+<form method="POST" action="{{ url_for('user_create') }}">
+  <ul class="flex-container vbox">
+    <li><span>Name:</span><input type="text" name="name"/></li>
+    <li><span>Email:</span><input type="email" name="email"/></li>
+    <li><span>Username:</span><input type="text" name="username"/></li>
+    <li><span>Password:</span><input type="password" name="password"/></li>
+    <li><span>Re-enter password:</span><input type="password" name="password1"/></li>
+    <li>
+      <select name="usertype_id">
+        {% for usertype in usertypes %}
+        <option value="{{ usertype.id }}">{{ usertype.name }}</option>
+        {% endfor %}
+      </select>
+    </li>
+    <li><input type="submit" class="simple_button" value="Add a new usertype"/></li>
+  </ul>
+</form>
+{% endblock %}
