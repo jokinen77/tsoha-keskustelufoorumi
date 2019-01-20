@@ -45,7 +45,7 @@ def user_create():
     db.session().add(user)
     db.session().commit()
 
-    print('New usertype added:', user.name, user.usertype.name)
+    print('New user added:', user.name, 'type:', user.usertype.name)
 
     return redirect(url_for("user_index"))
 
