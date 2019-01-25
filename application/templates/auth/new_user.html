@@ -1,21 +1,42 @@
 {% extends "layout.html" %}
 
-{% block body %}
+{% block div %}
+<h2 class="simple_header">Create a new user</h2>
 <form method="POST" action="{{ url_for('user_create') }}">
-  <ul class="flex-container vbox">
-    <li><span>Name:</span><input type="text" name="name"/></li>
-    <li><span>Email:</span><input type="email" name="email"/></li>
-    <li><span>Username:</span><input type="text" name="username"/></li>
-    <li><span>Password:</span><input type="password" name="password"/></li>
-    <li><span>Re-enter password:</span><input type="password" name="password1"/></li>
-    <li>
-      <select name="usertype_id">
-        {% for usertype in usertypes %}
-        <option value="{{ usertype.id }}">{{ usertype.name }}</option>
-        {% endfor %}
-      </select>
-    </li>
-    <li><input type="submit" class="simple_button" value="Add a new usertype"/></li>
-  </ul>
+    <table class="centered simple_table">
+        <tr>
+            <td><span>Name:</span></td>
+            <td><input type="text" name="name" /></td>
+        </tr>
+        <tr>
+            <td><span>Email:</span></td>
+            <td><input type="email" name="email" /></td>
+        </tr>
+        <tr>
+            <td><span>Username:</span></td>
+            <td><input type="text" name="username" /></td>
+        </tr>
+        <tr>
+            <td><span>Password:</span></td>
+            <td><input type="password" name="password" /></td>
+        </tr>
+        <tr>
+            <td><span>Re-enter password:</span></td>
+            <td><input type="password" name="password1" /></td>
+        </tr>
+        <tr>
+            <td><span>Usertype:</span></td>
+            <td>
+                <select name="usertype_id">
+                    {% for usertype in usertypes %}
+                    <option value="{{ usertype.id }}">{{ usertype.name }}</option>
+                    {% endfor %}
+                </select>
+            </td>
+        </tr>
+    </table>
+    <div class="centered">
+        <input type="submit" class="simple_button" value="Create a new user" />
+    </div>
 </form>
 {% endblock %}
