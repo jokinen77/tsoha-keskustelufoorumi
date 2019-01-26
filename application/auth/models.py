@@ -22,7 +22,7 @@ class User(db.Model):
         self.usertype_id = usertype_id
 
     def get_id(self):
-        return self.username
+        return self.id
 
     def is_active(self):
         return True

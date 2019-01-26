@@ -5,7 +5,7 @@
 
 .container {
   width: 100%;
-  max-width: 1000px;
+  max-width: 800px;
   margin: auto;
 }
 
@@ -41,6 +41,22 @@
 
 .simple_table td {
   padding: 2px 4px 2px 4px;
+}
+
+.nav_button {
+  border: none;
+  background: rgb(0, 0, 0);
+  color: white;
+  padding: 5px 10px;
+  text-align: center;
+  text-decoration: none;
+  display: inline;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.nav_button:hover {
+  background: rgb(50, 50, 50);
 }
 
 .flex-container {

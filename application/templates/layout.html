@@ -1,15 +1,42 @@
 <!DOCTYPE html>
 <html>
-  <head>
+
+<head>
     <meta charset="utf-8">
     <title>ForumApp</title>
     <link rel="stylesheet" type="text/css" href="/styles/default.css">
-  </head>
+</head>
 
-  <body>
-      <div class="container">
-          {% block content %}
-          {% endblock %}
-      </div>
-  </body>
+<body>
+    <div style="background: black;">
+        <div class="container">
+            <h1 class="simple_header" style="color: white;">ForumApp</h1>
+
+            <div style="float: right;">
+                {% if current_user.is_authenticated %}
+                <button class="nav_button" onclick="window.location.href='{{ url_for('usermanager') }}'">{{ current_user.username }}</button>
+                <button class="nav_button" onclick="window.location.href='{{ url_for('auth_logout') }}'">Logout</button>
+                {% endif %}
+            </div>
+            <div>
+                <button class="nav_button" onclick="window.location.href='{{ url_for('index') }}'">Main</button>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <ul class=flashes>
+            {% for message in messages %}
+            <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        {% endwith %}
+        
+        {% block content %}
+        {% endblock %}
+    </div>
+</body>
+
 </html>
