@@ -1,6 +1,7 @@
 # tsoha-keskustelufoorumi
 * Aineopintojen harjoitustyö: Tietokantasovellus 
 * [Heroku app](https://gentle-hamlet-78002.herokuapp.com/)
+  * Voit kirjautua palveluun käyttäjänimellä "tester" ilman salasanaa.
 * [Käyttöohjeet](https://github.com/jokinen77/tsoha-keskustelufoorumi/blob/master/documentation/kaytto_ohjeet.md)
 * [Alustava tietokantakaavio](https://github.com/jokinen77/tsoha-keskustelufoorumi/blob/master/documentation/db_diagram_20190119.png)
 
