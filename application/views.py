@@ -41,7 +41,7 @@ def usertype_create():
 
 @app.route("/usertype", methods=["GET"])
 @login_required
-def usertypes_index():
+def usertype_index():
     user_id=session.get('user_id', -1)
     return render_template("auth/usertype.html", usertypes=Usertype.query.all())
 

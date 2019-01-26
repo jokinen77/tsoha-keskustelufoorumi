@@ -1,7 +1,11 @@
 {% extends "layout.html" %}
 
 {% block content %}
-
+<h1 class="simple_header">Usermanager page</h1>
+<div class="centered">
+    <button class="simple_button" onclick="window.location='{{ url_for('user_index')}}'">List users</button>
+    <button class="simple_button" onclick="window.location='{{ url_for('usertype_index')}}'">List usertypes</button>
+</div>
 {% if current_user.usertype.value >= 50 %}
 <h2 class="simple_header">Create a new user</h2>
 <form method="POST" action="{{ url_for('user_create') }}">

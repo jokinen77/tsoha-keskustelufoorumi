@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 
 {% block content %}
-  <table>
+  <table class="centered simple_table">
     <tr>
       <th>Id</th>
       <th>Username</th>
@@ -21,5 +21,4 @@
     </tr>
     {% endfor %}
   </table>
-  <button class="simple_button" onclick="window.location='{{ url_for('user_form')}}'">Create a new user</button>
 {% endblock %}
