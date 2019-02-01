@@ -59,6 +59,10 @@
   background: rgb(50, 50, 50);
 }
 
+.flashes {
+    margin-left: 25px;
+}
+
 .flex-container {
   padding: 0px;
   margin: 0px;

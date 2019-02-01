@@ -18,6 +18,14 @@
       <td>{{ user.name }}</td>
       <td>{{ user.email }}</td>
       <td>{{ user.date_created }}</td>
+      {% if current_user.usertype.value >= 100 %}
+      <td>
+          <form method="POST" action="{{ url_for('user_delete') }}">
+              <input type="hidden" value="{{ user.id }}" name="user_id"/>
+              <input type="submit" class="simple_button" onclick="return confirm('Are you sure?!');" value="Delete"/>
+          </form>
+      </td>
+      {% endif %}
     </tr>
     {% endfor %}
   </table>

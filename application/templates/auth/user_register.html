@@ -1,0 +1,32 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<h2 class="simple_header">Register normal user</h2>
+<form method="POST" action="{{ url_for('user_register') }}">
+    <table class="centered simple_table">
+        <tr>
+            <td><span>Name:</span></td>
+            <td><input type="text" name="name" /></td>
+        </tr>
+        <tr>
+            <td><span>Email:</span></td>
+            <td><input type="email" name="email" /></td>
+        </tr>
+        <tr>
+            <td><span>Username:</span></td>
+            <td><input type="text" name="username" /></td>
+        </tr>
+        <tr>
+            <td><span>Password:</span></td>
+            <td><input type="password" name="password" /></td>
+        </tr>
+        <tr>
+            <td><span>Re-enter password:</span></td>
+            <td><input type="password" name="password_re" /></td>
+        </tr>
+    </table>
+    <div class="centered">
+        <input type="submit" class="simple_button" value="Register user" />
+    </div>
+</form>
+{% endblock %}
