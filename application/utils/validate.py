@@ -3,7 +3,8 @@ from flask import flash
 def validateUpdatePassword(password_new, password_new_re, password_old, password_real):
     result = True
 
-    validateStringLength(password_new, label='Password')
+    if not validateStringLength(password_new, label='Password'):
+        result = False
 
     if password_new != password_new_re:
         result = False
