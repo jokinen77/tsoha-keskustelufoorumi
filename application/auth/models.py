@@ -1,4 +1,10 @@
 from application import db
+from sqlalchemy.ext.declarative import declarative_base
+
+usergroup_account_table = db.Table('usergroup_account', db.metadata,
+    db.Column('account_id', db.Integer, db.ForeignKey('account.id')),
+    db.Column('usergroup_id', db.Integer, db.ForeignKey('usergroup.id'))
+)
 
 class User(db.Model):
 
@@ -13,6 +19,8 @@ class User(db.Model):
 
     usertype_id = db.Column(db.Integer, db.ForeignKey('usertype.id'), nullable=False)
     usertype = db.relationship("Usertype", back_populates="user", load_on_pending=True)
+
+    usergroups = db.relationship("Usergroup", secondary=usergroup_account_table, back_populates="users")
 
     def __init__(self, name, username, password, email, usertype_id):
         self.name = name
@@ -39,6 +47,7 @@ class Usergroup(db.Model):
     description = db.Column(db.String(500))
 
     forums = db.relationship("Forum", backref='usergroup', lazy=True)
+    users = db.relationship("User", secondary=usergroup_account_table, back_populates="usergroups")
 
     def __init__(self, name, description=None):
         self.name = name

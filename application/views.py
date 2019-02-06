@@ -1,6 +1,6 @@
 from flask import session, flash, redirect, render_template, request, url_for
 from application import app, db
-from application.auth.models import Usertype, User
+from application.auth.models import Usertype, User, Usergroup
 from flask_login import login_required
 from application.utils import validate as val
 
@@ -31,13 +31,36 @@ def usertype_create():
 
     return redirect(url_for("usermanager"))
 
+@app.route("/usergroup", methods=["GET"])
+@login_required
+def usergroup_index():
+    return render_template("auth/usergroup.html", usergroups=Usergroup.query.all())
+
+@app.route("/usergroup/new", methods=["POST"])
+@login_required
+def usergroup_create():
+    name=request.form.get("name")
+    description=request.form.get("description")
+
+    if val.validateStringLength(name, label='Usergroup', min = 3) and val.validateStringLength(description, label='Description', min = 0, max = 500):
+        usergroup=Usergroup(name, description)
+        db.session().add(usergroup)
+        db.session().commit()
+        flash('New usergroup added: ' + usergroup.name)
+
+    return redirect(url_for("usermanager"))
+
 @app.route("/usermanager", methods=["GET"])
 @login_required
 def usermanager():
     user_id = session.get('user_id', -1)
     user = User.query.get(user_id)
     usertypes = filter(lambda x: x.value <= user.usertype.value, Usertype.query.all())
-    return render_template("auth/usermanager.html", usertypes=usertypes)
+    usergroups = user.usergroups
+    if user.usertype.value >= 100:
+        usergroups = Usergroup.query.all()
+    users = User.query.all()
+    return render_template("auth/usermanager.html", users=users, usertypes=usertypes, usergroups=usergroups)
 
 @app.route("/user", methods=["GET"])
 @login_required
@@ -139,5 +162,28 @@ def user_update_information():
         db.session().add(user)
         db.session().commit()
         flash("Information updated!")
+
+    return redirect(url_for("usermanager"))
+
+@app.route("/user/add/usergroup", methods=["POST"])
+@login_required
+def user_add_usergroup():
+    user_id = session.get('user_id', -1)
+    user = User.query.get(user_id)
+
+    user1_id=request.form.get("user_id")
+    user1=User.query.get(user1_id)
+    usergroup_id=request.form.get("usergroup_id")
+    usergroup=Usergroup.query.get(usergroup_id)
+
+    if user.usertype.value >= 100 or (usergroup in user.usergroups and user.usertype.value >= 50):
+        user1.usergroups.append(usergroup)
+        usergroup.users.append(user1)
+        db.session().add(user1)
+        #db.session().add(usergroup)
+        db.session().commit()
+        flash("User " + user1.name + " added to usergroup " + usergroup.name)
+    else:
+        flash("No permission to the usergroup!")
 
     return redirect(url_for("usermanager"))

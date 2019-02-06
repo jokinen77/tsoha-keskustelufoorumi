@@ -1,0 +1,19 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<h2 class="simple_header">Usergroups</h2>
+  <table class="centered simple_table">
+    <tr>
+      <th>Id</th>
+      <th>Name</th>
+      <th>Description</th>
+    </tr>
+    {% for usergroup in usergroups %}
+    <tr>
+      <td>{{ usergroup.id }}</td>
+      <td>{{ usergroup.name }}</td>
+      <td>{{ usergroup.description }}</td>
+    </tr>
+    {% endfor %}
+  </table>
+{% endblock %}

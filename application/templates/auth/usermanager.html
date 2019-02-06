@@ -5,6 +5,7 @@
 <div class="centered">
     <button class="simple_button" onclick="window.location='{{ url_for('user_index')}}'">List users</button>
     <button class="simple_button" onclick="window.location='{{ url_for('usertype_index')}}'">List usertypes</button>
+    <button class="simple_button" onclick="window.location='{{ url_for('usergroup_index')}}'">List usergroups</button>
 </div>
 
 <h2 class="simple_header">Update information</h2>
@@ -94,21 +95,69 @@
 </form>
 {% endif %}
 
+{% if current_user.usertype.value >= 50 %}
+<h2 class="simple_header">Create a new usergroup</h2>
+<form method="POST" action="{{ url_for('usergroup_create') }}">
+    <table class="centered simple_table">
+        <tr>
+            <td><span>Name:</span></td>
+            <td><input type="text" name="name"/></td>
+        </tr>
+        <tr>
+            <td><span>Description:</span></td>
+            <td><textarea name="description" rows="4"></textarea></td>
+        </tr>
+    </table>
+    <div class="centered">
+        <input type="submit" class="simple_button" value="Add a new usergroup"/>
+    </div>
+</form>
+{% endif %}
+
+{% if current_user.usertype.value >= 50 %}
+<h2 class="simple_header">Add user to usergroup</h2>
+<form method="POST" action="{{ url_for('user_add_usergroup') }}">
+    <table class="centered simple_table">
+        <tr>
+            <td>
+                <select name="user_id">
+                    {% for user in users %}
+                    <option value="{{ user.id }}">{{ user.name }}</option>
+                    {% endfor %}
+                </select>
+            </td>
+            <td>
+                <select name="usergroup_id">
+                    {% for usergroup in usergroups %}
+                    <option value="{{ usergroup.id }}">{{ usergroup.name }}</option>
+                    {% endfor %}
+                </select>
+            </td>
+        </tr>
+    </table>
+    <div class="centered">
+        <input type="submit" class="simple_button" value="Add user to usergroup"/>
+    </div>
+</form>
+{% endif %}
+
 {% if current_user.usertype.value >= 100 %}
 <h2 class="simple_header">Create a new usertype</h2>
 <form method="POST" action="{{ url_for('usertype_create') }}">
-  <table class="centered simple_table">
-    <tr>
-        <td><span>Name:</span></td>
-        <td><input type="text" name="name"/></td>
-    </tr>
-    <tr>
-        <td><span>Value:</span></td>
-        <td><input type=number name="value" step="0.1" min="0" max="100" value="30.00"/></td>
-    </tr>
-</table>
-<div class="centered">
-    <input type="submit" class="simple_button" value="Add a new usertype"/>
-</div>
+    <table class="centered simple_table">
+        <tr>
+            <td><span>Name:</span></td>
+            <td><input type="text" name="name"/></td>
+        </tr>
+        <tr>
+            <td><span>Value:</span></td>
+            <td><input type=number name="value" step="0.1" min="0" max="100" value="30.00"/></td>
+        </tr>
+    </table>
+    <div class="centered">
+        <input type="submit" class="simple_button" value="Add a new usertype"/>
+    </div>
+</form>
 {% endif %}
+
 {% endblock %}
