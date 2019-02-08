@@ -8,8 +8,6 @@ from application.utils import validate as val
 @app.route("/")
 @login_required
 def index():
-    user_id = session.get('user_id', -1)
-    user = User.query.get(user_id)
     return render_template("index.html")
 
 @app.route("/usertype", methods=["GET"])

@@ -4,39 +4,55 @@
 <head>
     <meta charset="utf-8">
     <title>ForumApp</title>
-    <link rel="stylesheet" type="text/css" href="/styles/default.css">
+    <!--link rel="stylesheet" type="text/css" href="/styles/default.css"-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
 
 <body>
-    <div style="background: black;">
-        <div class="container">
-            <h1 class="simple_header" style="color: white;">ForumApp</h1>
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
+    	<a class="navbar-brand" href="{{ url_for('index') }}">ForumApp</a>
+    	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+    	</button>
+    	<div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('forums_index') }}">Forums</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('usermanager') }}">Management</a>
+              </li>
+            </ul>
+            <div class="form-inline mt-2 mt-md-0">
+        	    {% if current_user.is_authenticated %}
+        	    <a href="{{ url_for('auth_logout') }}">{{ current_user.username }} - Logout</a>
+        	    {% else %}
+        	    <a href="{{ url_for('auth_login') }}">Login</a>
+        	    {% endif %}
+            </div>
+    	</div>
+    </nav>
 
-            <div style="float: right;">
-                {% if current_user.is_authenticated %}
-                <button class="nav_button" onclick="window.location.href='{{ url_for('usermanager') }}'">{{ current_user.username }}</button>
-                <button class="nav_button" onclick="window.location.href='{{ url_for('auth_logout') }}'">Logout</button>
-                {% endif %}
-            </div>
-            <div>
-                <button class="nav_button" onclick="window.location.href='{{ url_for('index') }}'">Main</button>
-            </div>
-        </div>
-    </div>
-    <div class="container">
+
+    <main role="main" class="container">
         {% with messages = get_flashed_messages() %}
         {% if messages %}
-        <ul class="flashes">
+        <ul style="list-style-type: none;" class="flashes">
             {% for message in messages %}
-            <li>{{ message }}</li>
+            <li class="alert alert-info" role="alert">{{ message }}</li>
             {% endfor %}
         </ul>
         {% endif %}
         {% endwith %}
 
         {% block content %}
+        <p>
+            Content.
+        </p>
         {% endblock %}
-    </div>
+    </main>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 </body>
-
 </html>

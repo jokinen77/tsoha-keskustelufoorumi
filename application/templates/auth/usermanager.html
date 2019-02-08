@@ -3,9 +3,9 @@
 {% block content %}
 <h1 class="simple_header">Usermanager page</h1>
 <div class="centered">
-    <button class="simple_button" onclick="window.location='{{ url_for('user_index')}}'">List users</button>
-    <button class="simple_button" onclick="window.location='{{ url_for('usertype_index')}}'">List usertypes</button>
-    <button class="simple_button" onclick="window.location='{{ url_for('usergroup_index')}}'">List usergroups</button>
+    <button class="btn btn-dark" onclick="window.location='{{ url_for('user_index')}}'">List users</button>
+    <button class="btn btn-dark" onclick="window.location='{{ url_for('usertype_index')}}'">List usertypes</button>
+    <button class="btn btn-dark" onclick="window.location='{{ url_for('usergroup_index')}}'">List usergroups</button>
 </div>
 
 <h2 class="simple_header">Update information</h2>
@@ -26,7 +26,7 @@
             </tr>
         </table>
         <div class="centered">
-            <input type="submit" class="simple_button" value="Save" />
+            <input type="submit" class="btn btn-dark" value="Save" />
         </div>
     </form>
 </div>
@@ -49,7 +49,7 @@
             </tr>
         </table>
         <div class="centered">
-            <input type="submit" class="simple_button" value="Change password" />
+            <input type="submit" class="btn btn-dark" value="Change password" />
         </div>
     </form>
 </div>
@@ -90,7 +90,7 @@
         </tr>
     </table>
     <div class="centered">
-        <input type="submit" class="simple_button" value="Create a new user" />
+        <input type="submit" class="btn btn-dark" value="Create a new user" />
     </div>
 </form>
 {% endif %}
@@ -109,7 +109,7 @@
         </tr>
     </table>
     <div class="centered">
-        <input type="submit" class="simple_button" value="Add a new usergroup"/>
+        <input type="submit" class="btn btn-dark" value="Add a new usergroup"/>
     </div>
 </form>
 {% endif %}
@@ -136,7 +136,7 @@
         </tr>
     </table>
     <div class="centered">
-        <input type="submit" class="simple_button" value="Add user to usergroup"/>
+        <input type="submit" class="btn btn-dark" value="Add user to usergroup"/>
     </div>
 </form>
 {% endif %}
@@ -155,7 +155,7 @@
         </tr>
     </table>
     <div class="centered">
-        <input type="submit" class="simple_button" value="Add a new usertype"/>
+        <input type="submit" class="btn btn-dark" value="Add a new usertype"/>
     </div>
 </form>
 {% endif %}

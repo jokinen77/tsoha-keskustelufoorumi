@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+  <table class="table table-striped">
+    {% for message in messages %}
+    <tr>
+        <td>{{ message.content }}</td>
+        <td style="float: right;">{{ message.date }}<br />{{ message.user.name }}</td>
+    </tr>
+    {% endfor %}
+    <tr>
+        <td colspan="2">
+            <form method="POST" action="{{ url_for('forum_send_message', forum_id=forum.id) }}">
+              <textarea name="content" rows="3" class="form-control" ></textarea>
+              <div class="centered">
+                  <input type="submit" class="simple_button" value="Send"/>
+              </div>
+          </form>
+        </td>
+    </tr>
+  </table>
+{% endblock %}

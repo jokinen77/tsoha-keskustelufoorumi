@@ -1,0 +1,60 @@
+from flask import session, flash, redirect, render_template, request, url_for
+from application import app, db
+from application.auth.models import Usertype, User, Usergroup
+from application.forums.models import Forum, Message
+from flask_login import login_required
+from application.utils import validate as val
+
+
+@app.route("/forums")
+@login_required
+def forums_index():
+    user_id = session.get('user_id', -1)
+    user = User.query.get(user_id)
+
+    forums = []
+
+    for group in user.usergroups:
+        for forum in group.forums:
+            forums.append(forum)
+
+    return render_template("forums/forums.html", forums=forums, usergroups=user.usergroups)
+
+@app.route("/forums/new", methods=["POST"])
+@login_required
+def forum_create():
+    name=request.form.get("name")
+    usergroup_id=request.form.get("usergroup_id")
+
+    if val.validateStringLength(name, label='Forum', min = 3) and usergroup_id != None:
+        forum=Forum(name, usergroup_id)
+        db.session().add(forum)
+        db.session().commit()
+        flash('New forum added: ' + forum.name)
+
+    return redirect(url_for("forums_index"))
+
+@app.route("/forums/<forum_id>")
+@login_required
+def forums_show(forum_id=None):
+    user_id = session.get('user_id', -1)
+    user = User.query.get(user_id)
+
+    forum = Forum.query.get(int(forum_id))
+    messages = Message.query.filter_by(forum_id=forum_id).order_by(Message.date).all()
+
+    return render_template("forums/messages.html", forum=forum, messages=messages)
+
+@app.route("/forums/<forum_id>", methods=["POST"])
+@login_required
+def forum_send_message(forum_id=None):
+    content=request.form.get("content")
+    user_id = session.get('user_id', -1)
+
+    if val.validateStringLength(content, label='Message', min = 1) and forum_id != None:
+        message=Message(content, user_id, forum_id)
+        db.session().add(message)
+        db.session().commit()
+        flash('Message sended')
+
+    return redirect(url_for("forums_show", forum_id=forum_id))
