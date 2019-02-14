@@ -6,7 +6,7 @@ class Forum(db.Model):
     date_created = db.Column(db.DateTime, default=db.func.current_timestamp())
     name = db.Column(db.String(255), nullable=False)
 
-    usergroup_id = db.Column(db.Integer, db.ForeignKey('usergroup.id'), nullable=False)
+    usergroup_id = db.Column(db.Integer, db.ForeignKey('usergroup.id'))
     usergroup = db.relationship("Usergroup", back_populates="forums", load_on_pending=True)
     messages = db.relationship("Message", back_populates="forum")
 

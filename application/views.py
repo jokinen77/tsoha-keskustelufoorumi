@@ -1,22 +1,22 @@
 from flask import session, flash, redirect, render_template, request, url_for
-from application import app, db
+from application import app, db, login_required
 from application.auth.models import Usertype, User, Usergroup
-from flask_login import login_required
+from flask_login import current_user
 from application.utils import validate as val
 
 
 @app.route("/")
-@login_required
+@login_required(value=30)
 def index():
     return render_template("index.html")
 
 @app.route("/usertype", methods=["GET"])
-@login_required
+@login_required(value=30)
 def usertype_index():
     return render_template("auth/usertype.html", usertypes=Usertype.query.all())
 
 @app.route("/usertype/new", methods=["POST"])
-@login_required
+@login_required()
 def usertype_create():
     name=request.form.get("name")
     value=float(request.form.get("value"))
@@ -30,12 +30,12 @@ def usertype_create():
     return redirect(url_for("usermanager"))
 
 @app.route("/usergroup", methods=["GET"])
-@login_required
+@login_required(value=30)
 def usergroup_index():
     return render_template("auth/usergroup.html", usergroups=Usergroup.query.all())
 
 @app.route("/usergroup/new", methods=["POST"])
-@login_required
+@login_required(value=50)
 def usergroup_create():
     name=request.form.get("name")
     description=request.form.get("description")
@@ -49,10 +49,9 @@ def usergroup_create():
     return redirect(url_for("usermanager"))
 
 @app.route("/usermanager", methods=["GET"])
-@login_required
+@login_required(value=30)
 def usermanager():
-    user_id = session.get('user_id', -1)
-    user = User.query.get(user_id)
+    user = current_user
     usertypes = filter(lambda x: x.value <= user.usertype.value, Usertype.query.all())
     usergroups = user.usergroups
     if user.usertype.value >= 100:
@@ -61,19 +60,14 @@ def usermanager():
     return render_template("auth/usermanager.html", users=users, usertypes=usertypes, usergroups=usergroups)
 
 @app.route("/user", methods=["GET"])
-@login_required
+@login_required(value=30)
 def user_index():
     return render_template("auth/user.html", users=User.query.all())
 
 @app.route("/user/new", methods=["POST"])
-@login_required
+@login_required(value=50)
 def user_create():
-    user_id=session.get('user_id', -1)
-    user=User.query.get(user_id)
-
-    if user.usertype.value < 50:
-        flash("Permission denied!")
-        redirect(url_for("usermanager"))
+    user=current_user
 
     name=request.form.get("name")
     username=request.form.get("username")
@@ -111,26 +105,18 @@ def user_register():
     return redirect(url_for("index"))
 
 @app.route("/user/delete", methods=["POST"])
-@login_required
+@login_required(value=100)
 def user_delete():
-    user_id=session.get('user_id', -1)
-    user=User.query.get(user_id)
-
-    if user.usertype.value >= 100:
-        user_id=request.form.get("user_id")
-        User.query.filter(User.id == user_id).delete()
-        db.session.commit()
-        flash("User is deleted by id: " + user_id)
-        return redirect(url_for("user_index"))
-
-    flash("Permission denied!")
+    user_id=request.form.get("user_id")
+    User.query.filter(User.id == user_id).delete()
+    db.session.commit()
+    flash("User is deleted by id: " + user_id)
     return redirect(url_for("user_index"))
 
 @app.route("/user/update/password", methods=["POST"])
-@login_required
+@login_required(value=30)
 def user_update_password():
-    user_id = session.get('user_id', -1)
-    user = User.query.get(user_id)
+    user = current_user
 
     password_new=request.form.get("password_new")
     password_new_re=request.form.get("password_new_re")
@@ -145,10 +131,9 @@ def user_update_password():
     return redirect(url_for("usermanager"))
 
 @app.route("/user/update/information", methods=["POST"])
-@login_required
+@login_required(value=30)
 def user_update_information():
-    user_id = session.get('user_id', -1)
-    user = User.query.get(user_id)
+    user = current_user
 
     email = request.form.get("email")
     name = request.form.get("name")
@@ -164,17 +149,16 @@ def user_update_information():
     return redirect(url_for("usermanager"))
 
 @app.route("/user/add/usergroup", methods=["POST"])
-@login_required
+@login_required(value=50)
 def user_add_usergroup():
-    user_id = session.get('user_id', -1)
-    user = User.query.get(user_id)
+    user = current_user
 
     user1_id=request.form.get("user_id")
     user1=User.query.get(user1_id)
     usergroup_id=request.form.get("usergroup_id")
     usergroup=Usergroup.query.get(usergroup_id)
 
-    if user.usertype.value >= 100 or (usergroup in user.usergroups and user.usertype.value >= 50):
+    if user.usertype.value >= 100 or usergroup in user.usergroups:
         user1.usergroups.append(usergroup)
         usergroup.users.append(user1)
         db.session().add(user1)

@@ -2,12 +2,15 @@
 
 {% block content %}
 <h2 class="simple_header">Usergroups</h2>
-  <table class="centered simple_table">
-    <tr>
-      <th>Id</th>
-      <th>Name</th>
-      <th>Description</th>
-    </tr>
+  <table class="table">
+      <thead class="thead-dark">
+          <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Description</th>
+          </tr>
+      </thead>
+
     {% for usergroup in usergroups %}
     <tr>
       <td>{{ usergroup.id }}</td>

@@ -1,5 +1,5 @@
 from flask import session, flash, render_template, request, redirect, url_for
-from flask_login import login_user, logout_user, login_required
+from flask_login import login_user, logout_user
 from application import app, db
 from application.auth.models import Usertype, User
 from application.auth.forms import LoginForm#, UpdateEmailForm, UpdatePasswordForm

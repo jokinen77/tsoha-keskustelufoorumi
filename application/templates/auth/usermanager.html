@@ -1,163 +1,236 @@
 {% extends "layout.html" %}
 
 {% block content %}
-<h1 class="simple_header">Usermanager page</h1>
+<h1 class="simple_header">Management page</h1>
 <div class="centered">
-    <button class="btn btn-dark" onclick="window.location='{{ url_for('user_index')}}'">List users</button>
-    <button class="btn btn-dark" onclick="window.location='{{ url_for('usertype_index')}}'">List usertypes</button>
-    <button class="btn btn-dark" onclick="window.location='{{ url_for('usergroup_index')}}'">List usergroups</button>
+    <a class="btn btn-primary" href="{{ url_for('user_index')}}" role="button">List users</a>
+    <a class="btn btn-primary" href="{{ url_for('usertype_index')}}" role="button">List usertypes</a>
+    <a class="btn btn-primary" href="{{ url_for('usergroup_index')}}" role="button">List usergroups</a>
 </div>
 
-<h2 class="simple_header">Update information</h2>
-<div class="centered">
-    <form method="POST" action="{{ url_for('user_update_information') }}">
-        <table class="centered simple_table">
-            <tr>
-                <td><span>New email</span></td>
-                <td><input type="email" name="email" value="{{ current_user.email }}"></td>
-            </tr>
-            <tr>
-                <td><span>New name</span></td>
-                <td><input type="text" name="name" value="{{ current_user.name }}"></td>
-            </tr>
-            <tr>
-                <td><span>New username</span></td>
-                <td><input type="text" name="username" value="{{ current_user.username }}"></td>
-            </tr>
-        </table>
-        <div class="centered">
-            <input type="submit" class="btn btn-dark" value="Save" />
+<div class="accordion" id="accordionExample">
+
+    <div class="card">
+        <div class="card-header" id="heading1">
+            <h2 class="mb-0">
+                <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse1" aria-expanded="true" aria-controls="collapseOne">
+                    Update information
+                </button>
+            </h2>
         </div>
-    </form>
-</div>
 
-<h2 class="simple_header">Change password</h2>
-<div class="centered">
-    <form method="POST" action="{{ url_for('user_update_password') }}">
-        <table class="centered simple_table">
-            <tr>
-                <td><span>New password</span></td>
-                <td><input type="password" name="password_new" value=""></td>
-            </tr>
-            <tr>
-                <td><span>Re-enter new password</span></td>
-                <td><input type="password" name="password_new_re" value=""></td>
-            </tr>
-            <tr>
-                <td><span>Old password</span></td>
-                <td><input type="password" name="password_old" value=""></td>
-            </tr>
-        </table>
-        <div class="centered">
-            <input type="submit" class="btn btn-dark" value="Change password" />
+        <div id="collapse1" class="collapse" aria-labelledby="heading1" data-parent="#accordionExample">
+            <form class="card-body" method="POST" action="{{ url_for('user_update_information') }}">
+                <table class="centered simple_table">
+                    <tr>
+                        <td><span>New email</span></td>
+                        <td><input type="email" name="email" value="{{ current_user.email }}"></td>
+                    </tr>
+                    <tr>
+                        <td><span>New name</span></td>
+                        <td><input type="text" name="name" value="{{ current_user.name }}"></td>
+                    </tr>
+                    <tr>
+                        <td><span>New username</span></td>
+                        <td><input type="text" name="username" value="{{ current_user.username }}"></td>
+                    </tr>
+                </table>
+                <div class="centered">
+                    <input type="submit" class="btn btn-dark" value="Save" />
+                </div>
+            </form>
         </div>
-    </form>
+    </div>
+
+    <div class="card">
+        <div class="card-header" id="heading2">
+            <h2 class="mb-0">
+                <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse2" aria-expanded="true" aria-controls="collapseOne">
+                    Change password
+                </button>
+            </h2>
+        </div>
+
+        <div id="collapse2" class="collapse" aria-labelledby="heading2" data-parent="#accordionExample">
+            <form class="card-body" method="POST" action="{{ url_for('user_update_password') }}">
+                <table class="centered simple_table">
+                    <tr>
+                        <td><span>New password</span></td>
+                        <td><input type="password" name="password_new" value=""></td>
+                    </tr>
+                    <tr>
+                        <td><span>Re-enter new password</span></td>
+                        <td><input type="password" name="password_new_re" value=""></td>
+                    </tr>
+                    <tr>
+                        <td><span>Old password</span></td>
+                        <td><input type="password" name="password_old" value=""></td>
+                    </tr>
+                </table>
+                <div class="centered">
+                    <input type="submit" class="btn btn-dark" value="Change password" />
+                </div>
+            </form>
+        </div>
+    </div>
+
+    {% if current_user.usertype.value >= 50 %}
+    <div class="card">
+        <div class="card-header" id="heading3">
+            <h2 class="mb-0">
+                <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse3" aria-expanded="true" aria-controls="collapseOne">
+                    Create a new user
+                </button>
+            </h2>
+        </div>
+
+        <div id="collapse3" class="collapse" aria-labelledby="heading3" data-parent="#accordionExample">
+            <form class="card-body" method="POST" action="{{ url_for('user_create') }}">
+                <table class="centered simple_table">
+                    <tr>
+                        <td><span>Name:</span></td>
+                        <td><input type="text" name="name" /></td>
+                    </tr>
+                    <tr>
+                        <td><span>Email:</span></td>
+                        <td><input type="email" name="email" /></td>
+                    </tr>
+                    <tr>
+                        <td><span>Username:</span></td>
+                        <td><input type="text" name="username" /></td>
+                    </tr>
+                    <tr>
+                        <td><span>Password:</span></td>
+                        <td><input type="password" name="password" /></td>
+                    </tr>
+                    <tr>
+                        <td><span>Re-enter password:</span></td>
+                        <td><input type="password" name="password_re" /></td>
+                    </tr>
+                    <tr>
+                        <td><span>Usertype:</span></td>
+                        <td>
+                            <select name="usertype_id">
+                                {% for usertype in usertypes %}
+                                <option value="{{ usertype.id }}">{{ usertype.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </td>
+                    </tr>
+                </table>
+                <div class="centered">
+                    <input type="submit" class="btn btn-dark" value="Create a new user" />
+                </div>
+            </form>
+        </div>
+    </div>
+    {% endif %}
+
+    {% if current_user.usertype.value >= 50 %}
+    <div class="card">
+        <div class="card-header" id="heading4">
+            <h2 class="mb-0">
+                <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse4" aria-expanded="true" aria-controls="collapseOne">
+                    Create a new usergroup
+                </button>
+            </h2>
+        </div>
+
+        <div id="collapse4" class="collapse" aria-labelledby="heading4" data-parent="#accordionExample">
+            <form class="card-body" method="POST" action="{{ url_for('usergroup_create') }}">
+                <table class="centered simple_table">
+                    <tr>
+                        <td><span>Name:</span></td>
+                        <td><input type="text" name="name" /></td>
+                    </tr>
+                    <tr>
+                        <td><span>Description:</span></td>
+                        <td><textarea name="description" rows="4"></textarea></td>
+                    </tr>
+                </table>
+                <div class="centered">
+                    <input type="submit" class="btn btn-dark" value="Add a new usergroup" />
+                </div>
+            </form>
+        </div>
+    </div>
+    {% endif %}
+
+    {% if current_user.usertype.value >= 50 %}
+    <div class="card">
+        <div class="card-header" id="heading5">
+            <h2 class="mb-0">
+                <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse5" aria-expanded="true" aria-controls="collapseOne">
+                    Add user to usergroup
+                </button>
+            </h2>
+        </div>
+
+        <div id="collapse5" class="collapse" aria-labelledby="heading5" data-parent="#accordionExample">
+            <form class="card-body" method="POST" action="{{ url_for('user_add_usergroup') }}">
+                <table class="centered simple_table">
+                    <tr>
+                        <td>
+                            Add user:
+                        </td>
+                        <td>
+                            <select name="user_id">
+                                {% for user in users %}
+                                <option value="{{ user.id }}">{{ user.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            to usergroup:
+                        </td>
+                        <td>
+                            <select name="usergroup_id">
+                                {% for usergroup in usergroups %}
+                                <option value="{{ usergroup.id }}">{{ usergroup.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </td>
+                    </tr>
+                </table>
+                <div class="centered">
+                    <input type="submit" class="btn btn-dark" value="Add user to usergroup" />
+                </div>
+            </form>
+        </div>
+    </div>
+    {% endif %}
+
+    {% if current_user.usertype.value >= 100 %}
+    <div class="card">
+        <div class="card-header" id="heading6">
+            <h2 class="mb-0">
+                <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse6" aria-expanded="true" aria-controls="collapseOne">
+                    Create a new usertype
+                </button>
+            </h2>
+        </div>
+
+        <div id="collapse6" class="collapse" aria-labelledby="heading6" data-parent="#accordionExample">
+            <form class="card-body" method="POST" action="{{ url_for('usertype_create') }}">
+                <table class="centered simple_table">
+                    <tr>
+                        <td><span>Name:</span></td>
+                        <td><input type="text" name="name" /></td>
+                    </tr>
+                    <tr>
+                        <td><span>Value:</span></td>
+                        <td><input type=number name="value" step="0.1" min="0" max="100" value="30.00" /></td>
+                    </tr>
+                </table>
+                <div class="centered">
+                    <input type="submit" class="btn btn-dark" value="Add a new usertype" />
+                </div>
+            </form>
+        </div>
+    </div>
+    {% endif %}
+
 </div>
-
-{% if current_user.usertype.value >= 50 %}
-<h2 class="simple_header">Create a new user</h2>
-<form method="POST" action="{{ url_for('user_create') }}">
-    <table class="centered simple_table">
-        <tr>
-            <td><span>Name:</span></td>
-            <td><input type="text" name="name" /></td>
-        </tr>
-        <tr>
-            <td><span>Email:</span></td>
-            <td><input type="email" name="email" /></td>
-        </tr>
-        <tr>
-            <td><span>Username:</span></td>
-            <td><input type="text" name="username" /></td>
-        </tr>
-        <tr>
-            <td><span>Password:</span></td>
-            <td><input type="password" name="password" /></td>
-        </tr>
-        <tr>
-            <td><span>Re-enter password:</span></td>
-            <td><input type="password" name="password_re" /></td>
-        </tr>
-        <tr>
-            <td><span>Usertype:</span></td>
-            <td>
-                <select name="usertype_id">
-                    {% for usertype in usertypes %}
-                    <option value="{{ usertype.id }}">{{ usertype.name }}</option>
-                    {% endfor %}
-                </select>
-            </td>
-        </tr>
-    </table>
-    <div class="centered">
-        <input type="submit" class="btn btn-dark" value="Create a new user" />
-    </div>
-</form>
-{% endif %}
-
-{% if current_user.usertype.value >= 50 %}
-<h2 class="simple_header">Create a new usergroup</h2>
-<form method="POST" action="{{ url_for('usergroup_create') }}">
-    <table class="centered simple_table">
-        <tr>
-            <td><span>Name:</span></td>
-            <td><input type="text" name="name"/></td>
-        </tr>
-        <tr>
-            <td><span>Description:</span></td>
-            <td><textarea name="description" rows="4"></textarea></td>
-        </tr>
-    </table>
-    <div class="centered">
-        <input type="submit" class="btn btn-dark" value="Add a new usergroup"/>
-    </div>
-</form>
-{% endif %}
-
-{% if current_user.usertype.value >= 50 %}
-<h2 class="simple_header">Add user to usergroup</h2>
-<form method="POST" action="{{ url_for('user_add_usergroup') }}">
-    <table class="centered simple_table">
-        <tr>
-            <td>
-                <select name="user_id">
-                    {% for user in users %}
-                    <option value="{{ user.id }}">{{ user.name }}</option>
-                    {% endfor %}
-                </select>
-            </td>
-            <td>
-                <select name="usergroup_id">
-                    {% for usergroup in usergroups %}
-                    <option value="{{ usergroup.id }}">{{ usergroup.name }}</option>
-                    {% endfor %}
-                </select>
-            </td>
-        </tr>
-    </table>
-    <div class="centered">
-        <input type="submit" class="btn btn-dark" value="Add user to usergroup"/>
-    </div>
-</form>
-{% endif %}
-
-{% if current_user.usertype.value >= 100 %}
-<h2 class="simple_header">Create a new usertype</h2>
-<form method="POST" action="{{ url_for('usertype_create') }}">
-    <table class="centered simple_table">
-        <tr>
-            <td><span>Name:</span></td>
-            <td><input type="text" name="name"/></td>
-        </tr>
-        <tr>
-            <td><span>Value:</span></td>
-            <td><input type=number name="value" step="0.1" min="0" max="100" value="30.00"/></td>
-        </tr>
-    </table>
-    <div class="centered">
-        <input type="submit" class="btn btn-dark" value="Add a new usertype"/>
-    </div>
-</form>
-{% endif %}
-
 {% endblock %}

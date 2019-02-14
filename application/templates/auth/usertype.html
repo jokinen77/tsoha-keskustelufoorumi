@@ -1,12 +1,15 @@
 {% extends "layout.html" %}
 
 {% block content %}
-  <table class="centered simple_table">
-    <tr>
-      <th>Id</th>
-      <th>Name</th>
-      <th>Value</th>
-    </tr>
+  <table class="table">
+      <thead class="thead-dark">
+          <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Value</th>
+          </tr>
+      </thead>
+
     {% for usertype in usertypes %}
     <tr>
       <td>{{ usertype.id }}</td>

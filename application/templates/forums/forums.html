@@ -1,39 +1,72 @@
 {% extends "layout.html" %}
 
 {% block content %}
-<h2 class="simple_header">Create a new forum</h2>
-<form method="POST" action="{{ url_for('forum_create') }}">
-    <div class="form-group row">
-        <label for="staticEmail" class="col-sm-2 col-form-label">Name</label>
-        <input type="text" name="name" />
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createForumModal">
+    Create a new forum
+</button>
+
+<div class="modal fade" id="createForumModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Create a new forum</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form method="POST" action="{{ url_for('forum_create') }}">
+          <div class="form-group">
+            <label class="col-form-label">Name:</label>
+            <input type="text" class="form-control"  name="name" />
+          </div>
+          <div class="form-group">
+            <label class="col-form-label">Usergroup:</label>
+            <select name="usergroup_id">
+                <option value="">All</option>
+                {% for group in usergroups %}
+                <option value="{{ group.id }}">{{ group.name }}</option>
+                {% endfor %}
+            </select>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary">Create a new forum</button>
+          </div>
+        </form>
+      </div>
     </div>
-    <div class="form-group row">
-        <label for="staticEmail" class="col-sm-2 col-form-label">Usergroup</label>
-        <select name="usergroup_id">
-            {% for group in usergroups %}
-            <option value="{{ group.id }}">{{ group.name }}</option>
-            {% endfor %}
-        </select>
+  </div>
+</div>
+
+<br /><br />
+
+<form class="form-inline" method="GET" action="{{ url_for('forums_index') }}">
+    <div class="form-group mx-sm-3 mb-2">
+        <label>Filter forums by it's name with the keyword:</label>
     </div>
-    <button type="submit" class="btn btn-primary">Create a new forum</button>
+    <div class="form-group mx-sm-3 mb-2">
+        <input type="text" name="key" />
+    </div>
+    <button type="submit" class="btn btn-primary">Filter</button>
 </form>
 
-  <table class="table table-striped">
+<table class="table table-striped">
     <tr>
-      <th></th>
-      <th>Name</th>
-      <th>Usergroup</th>
-      <th>Date created</th>
+        <th></th>
+        <th>Name</th>
+        <th>Usergroup</th>
+        <th>Date created</th>
     </tr>
     {% for forum in forums %}
     <tr>
-      <td>
-          <a href="/forums/{{forum.id}}">Show</a>
-      </td>
-      <td>{{ forum.name }}</td>
-      <td>{{ forum.usergroup.name }}</td>
-      <td>{{ forum.date_created }}</td>
+        <td>
+            <a href="/forums/{{forum.id}}">Show</a>
+        </td>
+        <td>{{ forum.name }}</td>
+        <td>{{ forum.usergroup.name }}</td>
+        <td>{{ forum.date_created }}</td>
     </tr>
     {% endfor %}
-  </table>
+</table>
 {% endblock %}

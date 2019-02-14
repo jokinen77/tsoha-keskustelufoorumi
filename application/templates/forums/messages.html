@@ -6,7 +6,7 @@
     {% for message in messages %}
     <tr>
         <td>{{ message.content }}</td>
-        <td style="float: right;">{{ message.date }}<br />{{ message.user.name }}</td>
+        <td style="float: right;">{{ message.date }}<br />{{ message.user.username }}</td>
     </tr>
     {% endfor %}
     <tr>
