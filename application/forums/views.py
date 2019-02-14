@@ -36,7 +36,7 @@ def forums_index():
 @login_required
 def forum_create():
     name=request.form.get("name")
-    usergroup_id=request.form.get("usergroup_id")
+    usergroup_id=request.form.get("usergroup_id", None)
 
     if val.validateStringLength(name, label='Forum', min = 3):
         forum=Forum(name, usergroup_id)
