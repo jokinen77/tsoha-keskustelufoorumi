@@ -23,7 +23,7 @@ def forums_index():
                 forums.append(forum)
 
     # For showing forums, which have no usergroup, to all the users
-    for forum in Forum.query.filter_by(usergroup_id="").order_by(Forum.date_created).all():
+    for forum in Forum.query.filter_by(usergroup_id=None).order_by(Forum.date_created).all():
         if keyword in forum.name.lower():
             forums.append(forum)
 
