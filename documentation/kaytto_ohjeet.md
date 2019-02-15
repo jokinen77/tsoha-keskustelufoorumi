@@ -10,12 +10,16 @@ Sovelluksessa toiminnallisuudet toimivat hierarkisen mallin mukaan. Käyttäjän
 
 3. (30) **Normaali** Heillä on oikeus luoda keskustelu alueita omille käyttäjärymillensä ja kirjoittaa niihin viestejä. Heillä on oikeus muokata omaa sähköpostiosoitetta ja salasanaa.
 
+## Käyttäjäryhmät
+
+Käyttäjäryhmien tarkoituksena on rajata sovelluksen toimintojen (tässä tapauksessa foorumien) käyttöä. Tällöin toimintoja voidaan antaa vain näitä toimintoja tarvitseville/tilaaville käyttäjille. Tässä sovelluksessa käyttäjä joukoilla on mahdollisuus perustaa "omia alueita" oman käyttäjäryhmänsä sisällä.
+
 ## Käyttö esimerkkejä
 
-1. **Uusi organisaatio haluaa aloittaa palvelun käytön.** He ottavat yhteyttä palvelun ylläpitäjiin ja kertovat että ovat kiinnostuneita palvelusta. Organisaatio antaa heiltä yhden tulevan admin henkilön tiedot ja listan tarvitsemistaan eri käyttäjäryhmistä. Ylläpitäjät luovat tarvittavat käyttäjäryhmät ja organisaatiolle admin käyttäjätilin kyseiselle henkilölle kyseisillä käyttäjäryhmillä. Organisaation admin käyttäjä voi ruveta luomaan muille jäsenilleen tarvittavia tilejä tarvittaviin ryhmiin. Organisaatio voi aloittaa palvelun käytön.
+1. **Käyttäjä haluaa aloittaa palvelun käytön.** Hän rekisteröityy palveluun sisäänkirjautumis sivulta löytyvän linkin kautta. Uudet rekisteröityneet käyttäjät ovat käyttäjätyypiltään normaaleja käyttäjiä, joten he voivat käyttää vain kaikille käyttäjille avoimia foorumeita tai muuttaa omia tietojaan. Admin (tai sitä korkeammat) käyttäjät voivat lisätä käyttäjän käyttäjäryhmiin mihin heilläkin on oikeus (poikkeuksena ylläpitäjä voi lisätä kenet tahansa mihinkä ryhmään tahansa).
 
-2. **Organisaatio tarvitsee uuden käyttäjäryhmän käyttöönsä.** He ottavat yhteyden ylläpitoon ja kertovat tarpeensa. Ylläpitäjät luovat tarvittavat käyttäjäryhmät ja lisäävät organisaation admin tilin näihin ryhmiin. Organisaation admin voi ruveta lisäilemään henkilöitä näille listoille.
+2. **Organisaatio tarvitsee oman käyttäjäryhmän.** Ylläpitäjä luo uuden käyttäjäryhmän ja organisaation jollekin henkilölle admin käyttäjätilin ja lisää kyseisen admin tilin uuteen äjäryhmään. Nyt tämä admin käyttäjä voi lisätä tarvittavat henkilöt kyseiseen ryhmään.
 
-3. **Käyttäjä haluaa avata keskustelu alueen.** Käyttäjä painaa uuden alueen luomis nappia pääsivulta. Käyttäjä määrittää keskustelu alueelle nimen ja jonkin käyttäjäryhmän omista ryhmistään, sitten hän tallentaa uuden alueen. Uusi alue löytyy nyt pääsivulta.
+3. **Käyttäjä haluaa avata keskustelu alueen.** Käyttäjä painaa uuden alueen luomis nappia forum-sivulta ja määrittelee uudelle keskustelualueelle nimen ja käyttäjäryhmän, josta muut käyttäjät pääsevät ja näkevät keskustelualueen.
 
-4. **Käyttäjä haluaa etsiä keskustelu alueita, johon on laittanut ainakin yhden viestin tai luonut.** Käyttäjä filtteröi pääsivulta nämä keskustelu alueet valitsemalla kyseisen checkboxin ja painaa päivitys-nappia.
+4. **Käyttäjä haluaa etsiä jonkin keskustelualueen.** Käyttäjä filtteröi forum-sivulta keskustelualueet hakusanalla.
