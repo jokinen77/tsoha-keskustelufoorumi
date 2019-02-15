@@ -1,9 +1,13 @@
 # tsoha-keskustelufoorumi
-* Aineopintojen harjoitustyö: Tietokantasovellus 
+
+Aineopintojen harjoitustyö: Tietokantasovellus 
+
+* [Asennusohje](https://github.com/jokinen77/tsoha-keskustelufoorumi/blob/master/documentation/Asennusohje.md)
+* [Käyttöohjeet](https://github.com/jokinen77/tsoha-keskustelufoorumi/blob/master/documentation/kaytto_ohjeet.md)
 * [Heroku app](https://gentle-hamlet-78002.herokuapp.com/)
   * Voit kirjautua palveluun käyttäjänimellä "tester" ilman salasanaa.
-* [Käyttöohjeet](https://github.com/jokinen77/tsoha-keskustelufoorumi/blob/master/documentation/kaytto_ohjeet.md)
-* [Alustava tietokantakaavio](https://github.com/jokinen77/tsoha-keskustelufoorumi/blob/master/documentation/db_diagram_20190119.png)
-* [Asennusohje](https://github.com/jokinen77/tsoha-keskustelufoorumi/blob/master/documentation/Asennusohje.md)
+* [Alustava tietokantakaavio (vanhentunut)](https://github.com/jokinen77/tsoha-keskustelufoorumi/blob/master/documentation/db_diagram_20190119.png)
 
-Keskustelufoorumilla käyttäjät voivat keskustella omissa käyttäjäryhmissään. Esimerkiksi järjestöillä ja yrityksillä voi olla omat käyttäjäryhmänsä. Käyttäjä voi kuulua useaan käyttäjäryhmään samanaikaisesti. Käyttäjät voivat siis luoda keskustelualualueita omiin käyttäjäryhmiinsä ja lähettää niihin viestejä. Käyttäjä pystyy etsimään lähettämiään viestejä ja keskustelualueita. Lukija indentifioi itsensä aina lähettäessään viestin tai keskustelualueen luomisessa.
+## Kuvaus
+
+ForumApp tarjoaa käyttäjilleen keskustelualue toimintoja, eli käyttäjä voi luoda keskustelualueita ja lähettää niihin viestejä. Käyttäjät voivat rekisteröityä sovellukseen ja käyttää vapaasti kaikille avoimia keskustelualueita. Ylläpitäjien on mahdollista luoda käyttäjille käyttäjäryhmiä, joiden avulla keskustelualueet voidaan kohdentaa tietylle käyttäjäryhmälle, jolloin tätä keskustelualuetta ei pääse käyttämään/näkemään kyseisen käyttäjäryhmän ulkopuolelta. Käyttäjä voi kuulua useampaan ryhmään samanaikaisesti. Käyttäjille tarjotaan myös jonkinlaisia tilastoja/hakutoiminnallisuuksia omista toimistaan.
