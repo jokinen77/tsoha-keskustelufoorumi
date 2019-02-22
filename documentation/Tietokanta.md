@@ -54,3 +54,13 @@ CREATE TABLE message (
 	FOREIGN KEY(forum_id) REFERENCES forum (id)
 );
 ```
+
+## Sovelluksen käyttämiä yhteenvetokyselyitä
+
+* Käyttäjien lähettämien viestien lukumäärä selvitetään yhteenvetokyselyllä (:id kohdalle sijoitetaan kyseisen käyttäjän id):
+```{sql}
+SELECT COUNT(message.id) FROM account 
+	LEFT JOIN message ON message.user_id = account.id 
+	WHERE (account.id = :id) 
+	GROUP BY account.id;
+```
