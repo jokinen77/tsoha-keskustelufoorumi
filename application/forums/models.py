@@ -25,7 +25,7 @@ class Message(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('account.id', ondelete="CASCADE"), nullable=True)
     user = db.relationship("User", back_populates="messages", load_on_pending=True)
 
-    forum_id = db.Column(db.Integer, db.ForeignKey('forum.id'), nullable=False)
+    forum_id = db.Column(db.Integer, db.ForeignKey('forum.id', ondelete="CASCADE"), nullable=False)
     forum = db.relationship("Forum", back_populates="messages", load_on_pending=True)
 
     def __init__(self, content, user_id, forum_id):

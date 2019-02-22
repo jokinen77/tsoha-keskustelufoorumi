@@ -3,8 +3,8 @@ import application.forums.models
 from sqlalchemy.ext.declarative import declarative_base
 
 usergroup_account_table = db.Table('usergroup_account', db.metadata,
-    db.Column('account_id', db.Integer, db.ForeignKey('account.id')),
-    db.Column('usergroup_id', db.Integer, db.ForeignKey('usergroup.id'))
+    db.Column('account_id', db.Integer, db.ForeignKey('account.id', ondelete="CASCADE")),
+    db.Column('usergroup_id', db.Integer, db.ForeignKey('usergroup.id', ondelete="CASCADE"))
 )
 
 class User(db.Model):
@@ -55,7 +55,7 @@ class User(db.Model):
 
 class Usergroup(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String, unique=True, nullable=False)
+    name = db.Column(db.String(255), unique=True, nullable=False)
     description = db.Column(db.String(500))
 
     forums = db.relationship("Forum", back_populates="usergroup")
