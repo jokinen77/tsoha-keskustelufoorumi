@@ -19,7 +19,7 @@ class Message(db.Model):
     date = db.Column(db.DateTime, default=db.func.current_timestamp())
     content = db.Column(db.String(1000))
 
-    user_id = db.Column(db.Integer, db.ForeignKey('account.id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('account.id'), nullable=True)
     user = db.relationship("User", back_populates="messages", load_on_pending=True)
 
     forum_id = db.Column(db.Integer, db.ForeignKey('forum.id'), nullable=False)
