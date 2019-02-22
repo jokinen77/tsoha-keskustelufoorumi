@@ -79,7 +79,15 @@ def usermanager():
 @app.route("/user", methods=["GET"])
 @login_required(value=30)
 def user_index():
-    return render_template("auth/user.html", users=User.query.all())
+    keyword = request.args.get('key', '').lower()
+
+    users=[]
+
+    for user in User.query.order_by(User.username).all():
+        if keyword in user.username or keyword in user.email or keyword in user.name:
+            users.append(user)
+
+    return render_template("auth/user.html", users=users)
 
 @app.route("/user/new", methods=["POST"])
 @login_required(value=50)
