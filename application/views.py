@@ -108,6 +108,12 @@ def user_register():
 @login_required(value=100)
 def user_delete():
     user_id=request.form.get("user_id")
+    # user = User.query.get(user_id)
+    #
+    # for message in user.messages:
+    #     message.user_id = None
+    #     db.session().add(message)
+    # db.session().commit()
     User.query.filter(User.id == user_id).delete()
     db.session.commit()
     flash("User is deleted by id: " + user_id)
