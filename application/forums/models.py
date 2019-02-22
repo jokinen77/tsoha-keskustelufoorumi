@@ -14,6 +14,9 @@ class Forum(db.Model):
         self.name = name
         self.usergroup_id = usergroup_id
 
+    def get_messages_count(self):
+        return len(self.messages)
+
 class Message(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     date = db.Column(db.DateTime, default=db.func.current_timestamp())

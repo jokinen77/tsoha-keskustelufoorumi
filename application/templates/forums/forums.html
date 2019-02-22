@@ -61,9 +61,11 @@
 </form>
 
 <table class="table table-striped">
+
     <tr>
-        <th></th>
+        <th><span style="color: #007bff; font-size: 18px;">Forums</span></th>
         <th>Name</th>
+        <th>Messages</th>
         <th>Usergroup</th>
         <th>Date created</th>
     </tr>
@@ -73,6 +75,7 @@
             <a class="btn btn-primary btn-sm" href="/forums/{{forum.id}}">Show</a>
         </td>
         <td>{{ forum.name }}</td>
+        <td>{{ forum.get_messages_count() }}</td>
         <td>{{ forum.usergroup.name }}</td>
         <td>{{ forum.date_created }}</td>
     </tr>

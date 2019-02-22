@@ -2,7 +2,35 @@
 
 {% block content %}
 
-  <table class="table table-striped" style="border: solid 5px rgb(242, 242, 242);">
+{% for message in messages %}
+<div class="card border-light" style="margin-bottom: 3px;">
+  <div class="card-header">
+      <span class="badge badge-secondary">{{ message.date }}</span>
+      <span class="badge badge-primary">{{ message.user.username }}</span>
+   </div>
+  <div class="card-body">
+      <pre>{{ message.content }}</pre>
+  </div>
+</div>
+{% endfor %}
+
+<form method="POST" action="{{ url_for('forum_send_message', forum_id=forum.id) }}">
+    <div class="card bg-light" style="">
+      <div class="card-header">Send message to the forum:</div>
+      <div class="card-body">
+          <div class="form-row">
+              <div class="col">
+                  <textarea name="content" rows="6" class="form-control" ></textarea>
+              </div>
+          </div>
+      </div>
+      <div class="card-footer">
+          <button type="submit" class="btn btn-primary">Send</button>
+      </div>
+    </div>
+</form>
+</br>
+  <!--table class="table table-striped" style="border: solid 5px rgb(242, 242, 242);">
     {% for message in messages %}
     <tr>
         <td>
@@ -34,5 +62,5 @@
             </form>
         </td>
     </tr>
-  </table>
+</table-->
 {% endblock %}
