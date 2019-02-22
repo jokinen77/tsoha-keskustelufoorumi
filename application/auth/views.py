@@ -187,7 +187,6 @@ def user_add_usergroup():
         user1.usergroups.append(usergroup)
         usergroup.users.append(user1)
         db.session().add(user1)
-        #db.session().add(usergroup)
         db.session().commit()
         flash("User " + user1.name + " added to usergroup " + usergroup.name)
     else:

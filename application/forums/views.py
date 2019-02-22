@@ -13,6 +13,7 @@ def forums_index():
 
     # For filtering
     keyword = request.args.get('key', '').lower()
+    only_forums_user_have_posted_to = request.args.get('only_forums_user_have_posted_to', '').lower()
 
     forums = []
 
@@ -26,6 +27,10 @@ def forums_index():
     for forum in Forum.query.filter_by(usergroup_id=None).order_by(Forum.date_created).all():
         if keyword in forum.name.lower():
             forums.append(forum)
+
+    # Filter forums which user have posted to
+    if only_forums_user_have_posted_to:
+        forums = list(filter(lambda forum: user in list(map(lambda message: message.user, forum.messages)), forums))
 
     # Sorting forums list by date created
     forums.sort(key=lambda forum: forum.date_created, reverse=True)
@@ -56,6 +61,9 @@ def forums_show(forum_id=None):
 
     forum = Forum.query.get(int(forum_id))
     messages = Message.query.filter_by(forum_id=forum_id).order_by(Message.date).all()
+
+    #for message in messages:
+    #    message.content = message.content.replace("\n", "<br/>")
 
     return render_template("forums/messages.html", forum=forum, messages=messages)
 

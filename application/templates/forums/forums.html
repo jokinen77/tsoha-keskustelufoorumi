@@ -41,14 +41,23 @@
 
 <br /><br />
 
-<form class="form-inline" method="GET" action="{{ url_for('forums_index') }}">
-    <div class="form-group mx-sm-3 mb-2">
-        <label>Filter forums by it's name with the keyword:</label>
+<form method="GET" action="{{ url_for('forums_index') }}">
+    <div class="row">
+        <div class="col">
+            <div class="form-group">
+                <input class="form-control" type="text" name="key" placeholder="Filter forums by it's name with the keyword" />
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-group form-check">
+                <input name="only_forums_user_have_posted_to" value="true" type="checkbox" class="form-check-input">
+                <label class="form-check-label">Show only forums which I have posted to.</label>
+            </div>
+        </div>
+        <div class="col">
+            <button type="submit" class="btn btn-primary">Filter</button>
+        </div>
     </div>
-    <div class="form-group mx-sm-3 mb-2">
-        <input type="text" name="key" />
-    </div>
-    <button type="submit" class="btn btn-primary">Filter</button>
 </form>
 
 <table class="table table-striped">
@@ -61,7 +70,7 @@
     {% for forum in forums %}
     <tr>
         <td>
-            <a href="/forums/{{forum.id}}">Show</a>
+            <a class="btn btn-primary btn-sm" href="/forums/{{forum.id}}">Show</a>
         </td>
         <td>{{ forum.name }}</td>
         <td>{{ forum.usergroup.name }}</td>
