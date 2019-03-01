@@ -1,4 +1,4 @@
-from flask import Flask, session
+from flask import Flask, session, flash, redirect, url_for
 app = Flask(__name__, static_url_path='')
 
 from flask_sqlalchemy import SQLAlchemy
@@ -58,3 +58,9 @@ try:
     db.create_all()
 except:
     pass
+
+# Unhandled error
+@app.errorhandler(Exception)
+def all_exception_handler(error):
+   flash("Unhandled error! Contact to developers!")
+   return redirect(url_for("index"))
