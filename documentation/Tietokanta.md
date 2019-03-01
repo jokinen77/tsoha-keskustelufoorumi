@@ -1,5 +1,9 @@
 # Tietokanta
 
+## Tietokantakaavio
+
+<img width="1000" src="https://github.com/jokinen77/tsoha-keskustelufoorumi/blob/master/documentation/db_diagram-20190301.png">
+
 ## Create table -komennot
 
 ```{sql}
