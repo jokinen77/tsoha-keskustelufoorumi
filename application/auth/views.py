@@ -167,9 +167,12 @@ def user_update_information():
         user.email = email
         user.name = name
         user.username = username
-        db.session().add(user)
-        db.session().commit()
-        flash("Information updated!")
+        try:
+            db.session().add(user)
+            db.session().commit()
+            flash("Information updated!")
+        except Exception as e:
+            flash("Couldn't update the information: " + str(e.__cause__))
 
     return redirect(url_for("usermanager"))
 
