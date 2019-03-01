@@ -124,6 +124,11 @@ INSERT INTO forum (date_created, name, usergroup_id) VALUES (CURRENT_TIMESTAMP, 
 INSERT INTO message (date, content, user_id, forum_id) VALUES (CURRENT_TIMESTAMP, ?, ?, ?)
 ```
 
+* Viestin poistaminen
+```
+DELETE FROM message WHERE message.id = ?
+```
+
 * Käyttäjien lähettämien viestien lukumäärän laskeminen:
 ```{sql}
 SELECT COUNT(message.id) FROM account 
