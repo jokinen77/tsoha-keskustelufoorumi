@@ -123,9 +123,13 @@ def user_register():
 
     if val.validateNewUser(name, username, password, password_re, email, usertype_id):
         user=User(name, username, password, email, usertype_id)
-        db.session().add(user)
-        db.session().commit()
-        flash('New user added: ' + user.name)
+        try:
+            db.session().add(user)
+            db.session().commit()
+            flash('New user added: ' + user.name)
+        except Exception as e:
+            flash("Couldn't register the new user: " + str(e.__cause__))
+            return redirect(url_for("user_register"))
 
     return redirect(url_for("index"))
 
