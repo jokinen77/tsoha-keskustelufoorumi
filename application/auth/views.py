@@ -188,7 +188,7 @@ def user_add_usergroup():
         usergroup.users.append(user1)
         db.session().add(user1)
         db.session().commit()
-        flash("User " + user1.name + " added to usergroup " + usergroup.name)
+        flash("User " + user1.username + " added to usergroup " + usergroup.name)
     else:
         flash("No permission to the usergroup!")
 

@@ -32,6 +32,8 @@ class User(db.Model):
         self.usertype_id = usertype_id
 
     def is_in_usergroup(self, usergroup):
+        if self.usertype.value >= 100:
+            return True
         if usergroup == None:
             return True
         for group in self.usergroups:
