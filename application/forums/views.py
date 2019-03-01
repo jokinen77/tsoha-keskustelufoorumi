@@ -76,7 +76,7 @@ def forum_send_message(forum_id=None):
         flash('No permission to this forum!')
         return redirect(url_for("forums_index"))
 
-    if val.validateStringLength(content, label='Message', min = 1) and forum_id != None:
+    if val.validateStringLength(content, label='Message', min = 1, max = 1000) and forum_id != None:
         message=Message(content, current_user.id, forum_id)
         db.session().add(message)
         db.session().commit()
