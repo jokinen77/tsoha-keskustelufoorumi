@@ -26,9 +26,12 @@ def forums_index():
         if keyword in forum.name.lower():
             forums.append(forum)
 
+
     # Filter forums which user have posted to
     if only_forums_user_have_posted_to:
-        forums = list(filter(lambda forum: current_user in list(map(lambda message: message.current_user, forum.messages)), forums))
+        forum_names = list(map(lambda message: message.forum.name, current_user.messages))
+        forums = list(filter(lambda forum: forum.name in forum_names, forums))
+
 
     # Sorting forums list by date created
     forums.sort(key=lambda forum: forum.date_created, reverse=True)
@@ -88,8 +91,13 @@ def forum_send_message(forum_id=None):
 @login_required(value=100)
 def forum_delete_message(forum_id=None):
     message_id=request.form.get("message_id")
-    message = Message.query.get(int(message_id))
-    db.session().delete(message)
-    db.session().commit()
-    flash("Message deleted with id:" + message_id)
+
+    try:
+        message = Message.query.get(int(message_id))
+        db.session().delete(message)
+        db.session().commit()
+        flash("Message deleted with id:" + message_id)
+    except:
+        flash("Message didn't found!")
+
     return redirect(url_for("forums_show", forum_id=forum_id))
