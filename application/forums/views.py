@@ -1,16 +1,14 @@
 from flask import session, flash, redirect, render_template, request, url_for
-from application import app, db
+from application import app, db, login_required
 from application.auth.models import Usertype, User, Usergroup
 from application.forums.models import Forum, Message
-from flask_login import login_required, current_user
+from flask_login import current_user
 from application.utils import validate as val
 
 
 @app.route("/forums")
-@login_required
+@login_required(value=30)
 def forums_index():
-    user = current_user
-
     # For filtering
     keyword = request.args.get('key', '').lower()
     only_forums_user_have_posted_to = request.args.get('only_forums_user_have_posted_to', '').lower()
@@ -18,7 +16,7 @@ def forums_index():
     forums = []
 
     # For showing forums from user's usergroups
-    for group in user.usergroups:
+    for group in current_user.usergroups:
         for forum in group.forums:
             if keyword in forum.name.lower():
                 forums.append(forum)
@@ -30,18 +28,19 @@ def forums_index():
 
     # Filter forums which user have posted to
     if only_forums_user_have_posted_to:
-        forums = list(filter(lambda forum: user in list(map(lambda message: message.user, forum.messages)), forums))
+        forums = list(filter(lambda forum: current_user in list(map(lambda message: message.current_user, forum.messages)), forums))
 
     # Sorting forums list by date created
     forums.sort(key=lambda forum: forum.date_created, reverse=True)
 
-    return render_template("forums/forums.html", forums=forums, usergroups=user.usergroups)
+    return render_template("forums/forums.html", forums=forums, usergroups=current_user.usergroups)
 
 @app.route("/forums/new", methods=["POST"])
-@login_required
+@login_required(value=30)
 def forum_create():
     name=request.form.get("name")
     usergroup_id=request.form.get("usergroup_id")
+
     if not usergroup_id:
         usergroup_id = None
 
@@ -54,29 +53,43 @@ def forum_create():
     return redirect(url_for("forums_index"))
 
 @app.route("/forums/<forum_id>")
-@login_required
+@login_required(value=30)
 def forums_show(forum_id=None):
-    user_id = session.get('user_id', -1)
-    user = User.query.get(user_id)
-
     forum = Forum.query.get(int(forum_id))
-    messages = Message.query.filter_by(forum_id=forum_id).order_by(Message.date).all()
 
-    #for message in messages:
-    #    message.content = message.content.replace("\n", "<br/>")
+    if not current_user.is_in_usergroup(forum.usergroup):
+        flash('No permission to this forum!')
+        return redirect(url_for("forums_index"))
+
+    messages = Message.query.filter_by(forum_id=forum_id).order_by(Message.date).all()
 
     return render_template("forums/messages.html", forum=forum, messages=messages)
 
 @app.route("/forums/<forum_id>", methods=["POST"])
-@login_required
+@login_required(value=30)
 def forum_send_message(forum_id=None):
     content=request.form.get("content")
     user_id = session.get('user_id', -1)
+    forum = Forum.query.get(int(forum_id))
+
+    if not current_user.is_in_usergroup(forum.usergroup):
+        flash('No permission to this forum!')
+        return redirect(url_for("forums_index"))
 
     if val.validateStringLength(content, label='Message', min = 1) and forum_id != None:
-        message=Message(content, user_id, forum_id)
+        message=Message(content, current_user.id, forum_id)
         db.session().add(message)
         db.session().commit()
         flash('Message sended')
 
+    return redirect(url_for("forums_show", forum_id=forum_id))
+
+@app.route("/forums/<forum_id>/delete/message", methods=["POST"])
+@login_required(value=100)
+def forum_delete_message(forum_id=None):
+    message_id=request.form.get("message_id")
+    message = Message.query.get(int(message_id))
+    db.session().delete(message)
+    db.session().commit()
+    flash("Message deleted with id:" + message_id)
     return redirect(url_for("forums_show", forum_id=forum_id))

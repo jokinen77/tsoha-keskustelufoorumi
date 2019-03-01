@@ -3,7 +3,7 @@
 {% block content %}
 
 {% for message in messages %}
-<div class="card border-light" style="margin-bottom: 3px;">
+<div class="card bg-light" style="margin-bottom: 5px;">
   <div class="card-header">
       <span class="badge badge-secondary">{{ message.date }}</span>
       <span class="badge badge-primary">{{ message.user.username }}</span>
@@ -11,6 +11,16 @@
   <div class="card-body">
       <pre>{{ message.content }}</pre>
   </div>
+  {% if current_user.usertype.value >= 100 %}
+  <div class="card-footer">
+    <form method="POST" action="{{ url_for('forum_delete_message', forum_id=forum.id) }}">
+        <input name="message_id" value="{{message.id}}" type="hidden" />
+        <button type="submit" class="btn btn-primary btn-sm" onclick="return confirm('Are you sure?!');">
+            Delete this message
+        </button>
+    </form>
+  </div>
+  {% endif %}
 </div>
 {% endfor %}
 
@@ -30,37 +40,4 @@
     </div>
 </form>
 </br>
-  <!--table class="table table-striped" style="border: solid 5px rgb(242, 242, 242);">
-    {% for message in messages %}
-    <tr>
-        <td>
-            <div class="row">
-                <div class="col">
-                    <pre>{{ message.content }}</pre>
-                </div>
-                <div style="border-left: dashed 2px rgb(230, 230, 230);" class="col-3">
-                    <pre>
-{{ message.date }}
-{{ message.user.username }}
-                    </pre>
-                </div>
-            </div>
-        </td>
-    </tr>
-    {% endfor %}
-    <tr>
-        <td style="background: rgb(242, 242, 242);">
-            <form method="POST" action="{{ url_for('forum_send_message', forum_id=forum.id) }}">
-                <div class="row">
-                    <div class="col">
-                        <textarea name="content" rows="3" class="form-control" ></textarea>
-                    </div>
-                    <div class="col-3">
-                        <input type="submit" class="btn btn-primary btn-lg" value="Send"/>
-                    </div>
-                </div>
-            </form>
-        </td>
-    </tr>
-</table-->
 {% endblock %}

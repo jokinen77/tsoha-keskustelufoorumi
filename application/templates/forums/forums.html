@@ -71,7 +71,7 @@
     {% for forum in forums %}
     <tr>
         <td>
-            <a class="btn btn-primary btn-sm" href="/forums/{{forum.id}}">Show</a>
+            <a class="btn btn-primary btn-sm" href="{{ url_for('forums_show', forum_id=forum.id) }}">Show</a>
         </td>
         <td>{{ forum.name }}</td>
         <td>{{ forum.get_messages_count() }}</td>

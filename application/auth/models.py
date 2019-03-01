@@ -31,6 +31,14 @@ class User(db.Model):
         self.email = email
         self.usertype_id = usertype_id
 
+    def is_in_usergroup(self, usergroup):
+        if usergroup == None:
+            return True
+        for group in self.usergroups:
+            if group.name == usergroup.name:
+                return True
+        return False
+
     def get_id(self):
         return self.id
 
