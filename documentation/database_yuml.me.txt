@@ -1,12 +1,18 @@
-[User|(PK) username String; (FK) userTypeId Integer; email String; password String]
-[UserType|(PK) id Integer; name String; value Douple]
-[UserGroup|(PK) name String; description String]
-[UserGroupUser|(FK) userId String; (FK) userGroupId String]
-[Forum|(PK) id Integer; (FK) userGroupId String; name String; created Date]
-[Message|(PK) id Integer; (FK) forumId Integer; (FK) userId String; content String; sended Date]
+
+[User|(PK) id Integer; (FK) userTypeId Integer; name String(255); username String(255); email String(255); password String(255); date_created Date]
+[UserType|(PK) id Integer; name String(255); value Float]
+[UserGroup|(PK) id Integer; name String(255); description String(500)]
+[UserGroupUser|(FK) userId Integer; (FK) userGroupId Integer]
+[Forum|(PK) id Integer; (FK) userGroupId Integer; name String(255); date_created Date]
+[Message|(PK) id Integer; (FK) forumId Integer; (FK) userId Integer; content String(1000); date Date]
 
 [User]*-1[UserType]
 [User]1-*[UserGroupUser]
 [UserGroup]1-*[UserGroupUser]
 [UserGroup]1-*[Forum]
 [Forum]1-*[Message]
+[Message]*-1[User]
+
+###############
+
+, [User|(PK) id Integer; (FK) userTypeId Integer; name String(255); username String(255); email String(255); password String(255); date_created Date], [UserType|(PK) id Integer; name String(255); value Float], [UserGroup|(PK) id Integer; name String(255); description String(500)], [UserGroupUser|(FK) userId Integer; (FK) userGroupId Integer], [Forum|(PK) id Integer; (FK) userGroupId Integer; name String(255); date_created Date], [Message|(PK) id Integer; (FK) forumId Integer; (FK) userId Integer; content String(1000); date Date], , [User]*-1[UserType], [User]1-*[UserGroupUser], [UserGroup]1-*[UserGroupUser], [UserGroup]1-*[Forum], [Forum]1-*[Message], [Message]*-1[User]
