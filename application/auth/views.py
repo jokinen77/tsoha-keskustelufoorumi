@@ -40,9 +40,12 @@ def usertype_create():
 
     if val.validateStringLength(name, label='Usertype', min = 3) and val.validateNumberBetween(value, 0, 100):
         usertype=Usertype(name, value)
-        db.session().add(usertype)
-        db.session().commit()
-        flash('New usertype added: ' + usertype.name)
+        try:
+            db.session().add(usertype)
+            db.session().commit()
+            flash('New usertype added: ' + usertype.name)
+        except:
+            flash("New usertype could't be added: " + str(e.__cause__))
 
     return redirect(url_for("usermanager"))
 
@@ -59,9 +62,12 @@ def usergroup_create():
 
     if val.validateStringLength(name, label='Usergroup', min = 3) and val.validateStringLength(description, label='Description', min = 0, max = 500):
         usergroup=Usergroup(name, description)
-        db.session().add(usergroup)
-        db.session().commit()
-        flash('New usergroup added: ' + usergroup.name)
+        try:
+            db.session().add(usergroup)
+            db.session().commit()
+            flash('New usergroup added: ' + usergroup.name)
+        except:
+            flash("New usergroup couldn't be added: " + str(e.__cause__))
 
     return redirect(url_for("usermanager"))
 
@@ -103,9 +109,12 @@ def user_create():
 
     if val.validateNewUser(name, username, password, password_re, email, usertype_id):
         user=User(name, username, password, email, usertype_id)
-        db.session().add(user)
-        db.session().commit()
-        flash('New user added: ' + user.name)
+        try:
+            db.session().add(user)
+            db.session().commit()
+            flash('New user added: ' + user.name)
+        except Exception as e:
+            flash("Couldn't create the new user: " + str(e.__cause__))
 
     return redirect(url_for("usermanager"))
 
